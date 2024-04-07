@@ -9,7 +9,7 @@ pipeline{
     stage('Checkout') {
       steps {
         sh 'echo passed'
-        git branch: 'main', url: 'https://github.com/devops-project-2024/source-code.git'
+         git branch: 'main', credentialsId: 'github-token-classic', url: 'https://github.com/devops-project-2024/source-code.git' 
       }
     }
     stage('Build and Test') {
@@ -31,7 +31,7 @@ pipeline{
     }
     stage('Build and Push Docker Image') {
       environment {
-        DOCKER_IMAGE = "emortoo/web-app-cicd:${BUILD_NUMBER}"
+         DOCKER_IMAGE = "emortoo/crispy-kitchen:${BUILD_NUMBER}"
         // DOCKERFILE_LOCATION = "Dockerfile"
         REGISTRY_CREDENTIALS = credentials('docker-cred')
       }
