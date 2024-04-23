@@ -2,5 +2,5 @@ projectKey=com.mt:crispy-kitchen-web
 serverUrl=http://3.235.234.2:9000
 serverVersion=10.5.0.89998
 dashboardUrl=http://3.235.234.2:9000/dashboard?id=com.mt%3Acrispy-kitchen-web
-ceTaskId=beb73a4f-e15e-429e-abde-7502ad96e9c1
-ceTaskUrl=http://3.235.234.2:9000/api/ce/task?id=beb73a4f-e15e-429e-abde-7502ad96e9c1
+ceTaskId=ae53957b-44a7-412d-b63a-cec493bafcc5
+ceTaskUrl=http://3.235.234.2:9000/api/ce/task?id=ae53957b-44a7-412d-b63a-cec493bafcc5
