@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: web-app
-        image: emortoo/crispy-kitchen:replaceImageTag
+        image: emortoo/crispy-kitchen:4
         ports:
         - containerPort: 8080
