@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web-app-ingress
+  namespace: web-app
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx  # Assuming you are using Nginx Ingress Controller
+  rules:
+  - host: a85c1933e57164d2fb793b84b8e5db1a-914917586.us-east-1.elb.amazonaws.com  # Use the DNS name of your ELB
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-app-service
+            port:
+              number: 80
