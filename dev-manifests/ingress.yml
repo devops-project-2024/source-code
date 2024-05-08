@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx  # Assuming you are using Nginx Ingress Controller
   rules:
-  - host: a85c1933e57164d2fb793b84b8e5db1a-914917586.us-east-1.elb.amazonaws.com  # Use the DNS name of your ELB
+  - host: a940eb1476ab44729a62d28d866fb9c1-935096736.us-east-1.elb.amazonaws.com  # Use the DNS name of your ELB
     http:
       paths:
       - path: /
