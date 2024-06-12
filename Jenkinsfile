@@ -17,9 +17,21 @@ pipeline {
         }
         stage('3. SonarQube analysis') {
             steps {
-                sh 'mvn sonar:sonar'
+                script {
+                    scannerHome = tool 'sonarqube scanner'
                 }
+                    withSonarQubeEnv('sonar-token') {
+                        sh """
+                            ${scannerHome}/bin/sonar-scanner \
+                            -Dsonar.projectKey=crispy-kitchen \
+                            -Dsonar.projectName='crispy-kitchen' \
+                            -Dsonar.host.url=http://34.207.207.18:9000 \
+                            -Dsonar.token=sqp_331ff2e9b77a0172554109c7117474b70debd686
+                        """
+                    }
+            
             }
+        }
         stage('4. Build and Push Docker Image') {
             environment {
                 DOCKER_IMAGE = "emortoo/crispy-kitchen-project:${BUILD_NUMBER}"
