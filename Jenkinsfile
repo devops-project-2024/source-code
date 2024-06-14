@@ -54,15 +54,18 @@ pipeline {
                 GIT_USER_NAME = "devops-project-2024"
             }
             steps {
-                withCredentials([gitUsernamePassword(credentialsId: 'github-token', variable: 'GITHUB_TOKEN', gitToolName: 'Default')]) {
+                withCredentials([gitUsernamePassword(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
                     sh """
-                        git config user.email "emortoo@yahoo.com"
-                        git config user.name "Emmanuel Mortoo"
-                        BUILD_NUMBER=${BUILD_NUMBER}
-                        sed -i "s/emortoo/crispy-kitchen:v1.0.0/emortoo/crispy-kitchen:v1.0.${BUILD_NUMBER}/g" dev-manifests/deployment.yml                        
-                        git add .
-                        git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                        git push https://$GITHUB_TOKEN@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+                        # Configure Git to use the token for authentication
+                        git config --global user.email "emortoo@yahoo.com"
+                        git config --global user.name "Emmanuel Mortoo"
+                        git config --global credential.helper '!f() { echo username=\$GIT_USER_NAME; echo password=\$GITHUB_TOKEN; }; f'
+
+                        # Perform Git operations
+                        sed -i '' "s/emortoo\\/crispy-kitchen:v1.0.0/emortoo\\/crispy-kitchen:v1.0.\$BUILD_NUMBER/g" dev-manifests/deployment.yml
+                        git add dev-manifests/deployment.yml
+                        git commit -m "Update deployment image to version \$BUILD_NUMBER"
+                        git push https://github.com/\$GIT_USER_NAME/\$GIT_REPO_NAME HEAD:main
                     """
                 }
             }
