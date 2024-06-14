@@ -20,13 +20,13 @@ pipeline {
                 script {
                     scannerHome = tool 'sonarqube scanner'
                 }
-                    withSonarQubeEnv('sonar-token') {
+                    withSonarQubeEnv('sonar-server') {
                         sh """
                             ${scannerHome}/bin/sonar-scanner \
                             -Dsonar.projectKey=crispy-kitchen \
                             -Dsonar.projectName='crispy-kitchen' \
-                            -Dsonar.host.url=http://34.207.207.18:9000 \
-                            -Dsonar.token=sqp_331ff2e9b77a0172554109c7117474b70debd686
+                            -Dsonar.host.url=http://54.210.238.151:9000/ \
+                            -Dsonar.token=sqp_cebf052c3bec65bb94c81ed0bd5bbbf00d51ef96
                         """
                     }
             
