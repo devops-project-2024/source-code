@@ -55,18 +55,23 @@ pipeline {
             }
             steps {
                 withCredentials([gitUsernamePassword(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
-                    sh """
-                       # Configure Git to use the token for authentication
-                        git config --global user.email "emortoo@yahoo.com"
-                        git config --global user.name "Emmanuel Mortoo"
-                        git config --global credential.helper '!f() { echo username=\$GIT_USER_NAME; echo password=\$GITHUB_TOKEN; }; f'
+                    script {
+                sh 'pwd'  // Check current directory
+                sh 'ls -la'  // List files to verify presence of the deployment.yml
 
-                        # Perform Git operations
-                        sed -i '' "s/emortoo\\/crispy-kitchen:v1.0.0/emortoo\\/crispy-kitchen:v1.0.\$BUILD_NUMBER/g" dev-manifests/deployment.yml
-                        git add dev-manifests/deployment.yml
-                        git commit -m "Update deployment image to version \$BUILD_NUMBER"
-                        git push https://github.com/\$GIT_USER_NAME/\$GIT_REPO_NAME HEAD:main
-                    """
+                // Configuring Git
+                sh 'git config --global user.email "emortoo@yahoo.com"'
+                sh 'git config --global user.name "Emmanuel Mortoo"'
+                sh 'git config --global credential.helper "!f() { echo username=\$GIT_USER_NAME; echo password=\$GITHUB_TOKEN; }; f"'
+
+                // Update the deployment file
+                sed -i '' "s/emortoo\\/crispy-kitchen:v1.0.0/emortoo\\/crispy-kitchen:v1.0.\$BUILD_NUMBER/g" dev-manifests/deployment.yml
+                
+                // Add and commit changes
+                sh 'git add dev-manifests/deployment.yml'
+                sh 'git commit -m "Update image version to ${env.BUILD_NUMBER}"'
+                sh 'git push https://github.com/\$GIT_USER_NAME/\$GIT_REPO_NAME HEAD:main'
+            
                 }
             }
         }
