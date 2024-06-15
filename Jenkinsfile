@@ -23,10 +23,10 @@ pipeline {
                     withSonarQubeEnv('sonar-server') {
                         sh """
                             ${scannerHome}/bin/sonar-scanner \
-                            -Dsonar.projectKey=crispy-kitchen \
-                            -Dsonar.projectName='crispy-kitchen' \
-                            -Dsonar.host.url=http://54.210.238.151:9000/ \
-                            -Dsonar.token=sqp_cebf052c3bec65bb94c81ed0bd5bbbf00d51ef96
+                            -Dsonar.projectKey=crispy \
+                            -Dsonar.projectName='crispy' \
+                            -Dsonar.host.url=http://54.210.238.151:9000 \
+                            -Dsonar.token=sqp_d6ccd6cf464974d0cbbe55ef3d76c76aba81d803
                         """
                     }
             
@@ -59,10 +59,16 @@ pipeline {
                         git config user.email "emortoo@yahoo.com"
                         git config user.name "Emmanuel Mortoo"
                         BUILD_NUMBER=${BUILD_NUMBER}
-                        sed -i "s/emortoo/crispy-kitchen:v1.0.5/emortoo/crispy-kitchen:v1.0.${BUILD_NUMBER}/g" dev-manifests/deployment.yml                        
-                        git add .
-                        git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                        git push https://$GITHUB_TOKEN@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+                        // sed -i "s/emortoo/crispy-kitchen:v1.0.5/emortoo/crispy-kitchen:v1.0.${BUILD_NUMBER}/g" dev-manifests/deployment.yml                        
+                        // git add .
+                        // git commit -m "Update deployment image to version ${BUILD_NUMBER}"
+                        // git push https://$GITHUB_TOKEN@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+
+                        # Perform Git operations
+                        sed -i '' "s/emortoo\\/crispy-kitchen:v1.0.0/emortoo\\/crispy-kitchen:v1.0.\$BUILD_NUMBER/g" dev-manifests/deployment.yml
+                        git add dev-manifests/deployment.yml
+                        git commit -m "Update deployment image to version \$BUILD_NUMBER"
+                        git push https://github.com/\$GIT_USER_NAME/\$GIT_REPO_NAME HEAD:main
                     """
                 }
             }
