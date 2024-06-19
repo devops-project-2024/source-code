@@ -83,6 +83,7 @@ pipeline {
                             git remote -v
                             git push https://\${GITHUB_TOKEN}@github.com/\${GIT_USER_NAME}/\${GIT_REPO_NAME}.git HEAD:main
                             """
+                        }
                     }
                 }
             }
