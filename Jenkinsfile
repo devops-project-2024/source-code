@@ -8,9 +8,7 @@ pipeline {
 
         stage('1. Git Checkout') {
            steps {
-                credentialsId: 'github-token', 
-                url: 'https://github.com/devops-project-2024/source-code.git',
-                branch: 'main'
+                git(credentialsId: 'github-token', url: 'https://github.com/devops-project-2024/source-code.git', branch: 'main')
            }
         }
 
