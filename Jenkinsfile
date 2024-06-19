@@ -68,17 +68,21 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'github-token-2', variable: 'GITHUB_TOKEN')]) {
                     script {
-                        sh """
+                        script {
+                            sh """
                             cat dev-manifests/deployment.yml
-                            sed -i 's|emortoo/crispy-kitchen:v1.0.0|emortoo/crispy-kitchen:v1.0.\${BUILD_NUMBER}|g' dev-manifests/deployment.yml
+                            sed -i 's|emortoo/crispy-kitchen:v1.0.0|emortoo/crispy-kitchen:v1.0.${BUILD_NUMBER}|g' dev-manifests/deployment.yml
                             cat dev-manifests/deployment.yml
-                            git config user.email 'you@example.com'  // Set your email
-                            git config user.name 'Your Name'  // Set your name
+
+                            # Setting git configurations with proper syntax
+                            git config user.email 'emortoo@yahoo.com'
+                            git config user.name 'Emmanuel Mortoo'
+
                             git add dev-manifests/deployment.yml
                             git commit -m 'Updated the dev-manifests/deployment.yml via Jenkins Pipeline'
                             git remote -v
                             git push https://\${GITHUB_TOKEN}@github.com/\${GIT_USER_NAME}/\${GIT_REPO_NAME}.git HEAD:main
-                        """
+                            """
                     }
                 }
             }
