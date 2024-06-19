@@ -66,7 +66,7 @@ pipeline {
                 GIT_USER_NAME = "devops-project-2024"
             }
             steps {
-                withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
+                withCredentials([string(credentialsId: 'github-token-2', variable: 'GITHUB_TOKEN')]) {
                     script {
                         sh """
                             cat dev-manifests/deployment.yml
